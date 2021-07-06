@@ -127,7 +127,7 @@ To run this code you need:
   - [Docker](https://www.docker.com/get-started) and [docker-compose](https://docs.docker.com/compose/install/) installed
 
 Then:
-  - Clone this repo: `git clone git@github.com:Workana/hiring_challenge.git`.
+  - Clone this repo: `git clone git@github.com:Workana/dev_challenges.git`.
   - Run `docker-compose up`.
   
 Check if services are up and running:
