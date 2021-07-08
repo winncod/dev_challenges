@@ -1,19 +1,31 @@
 <template>
   <div id="app">
-    <h1>♠ Planning Poker ♠</h1>
-    <div id="logo"></div>
-    <h2>Hiring Challenge 👋</h2>
-    <Lobby />
+    <b-overlay :show="loading" rounded="sm">
+      <h1>♠ Planning Poker Demo♠</h1>
+      <div id="logo"></div>
+      <h2>Hiring Challenge 👋</h2>
+      <notifications group="main" />
+      <div id="container">
+        <router-view></router-view>
+      </div>
+      <template #overlay>
+        <div class="text-center">
+          <b-icon icon="stopwatch" font-scale="3" animation="cylon"></b-icon>
+          <p id="cancel-label">Please wait...</p>
+        </div>
+      </template>
+    </b-overlay>
   </div>
 </template>
 
 <script>
-import Lobby from './components/Lobby.vue'
 
 export default {
   name: 'App',
-  components: {
-    Lobby
+  computed:{
+    loading(){
+      return this.$store.state.loading
+    }
   }
 }
 </script>
@@ -54,63 +66,5 @@ h3 {
   color: #2a9d8f;
   text-shadow: 2px 2px 2px #ccc;
 }
-#voteList {
-  margin: 10px auto;
-  justify-content: center;
-  display: flex;
-  flex-wrap: wrap;
-  list-style: none;
-  justify-content: space-around;
-}
-#voteList li {
-  box-sizing: border-box;
-  cursor: pointer;
-  height: 100px;
-  width: 100px;
-  margin: 0;
-  padding: 30px 0;
-  border-radius: 9px;
-  box-shadow: 2px 2px 2px #000;
-  text-shadow: 1px 1px 2px #444;
-  background: #e76f51;
-  color: #fff;
-  margin: 10px;
-  font-size: 30px;
-  transition: background-color 0.3s ease font-size 0.3s ease;
-}
-#voteList li.voted {
-  font-size: 33px;
-  background: #2a9d8f;
-}
-#memberList {
-  list-style: none;
-}
-#memberList li {
-  box-shadow: 2px 2px 2px #444;
-  text-shadow: 1px 1px 1px #444;
-  background: #e76f51;
-  margin: 0.5em 0;
-  padding: 1em;
-  border-radius: 8px;
-  display: flex;
-  align-content: center;
-}
-#memberList li div {
-  width: 50%;
-  display: block;
-  margin: auto;
-}
-#memberList li div.name {
-  color: #FFF;
-}
-#memberList li div.vote {
-  color: #FFF;
-  text-shadow: none;
-  font-size: 1.5em;
-}
-#issue {
-  color: #2a9d8f;
-  width: 75px;
-  text-align: center;
-}
+
 </style>
