@@ -4,7 +4,7 @@
           <div class="row">
             <div class="col-6">
                 <b-form-group id="username" label="Username" label-for="username">
-                  <b-form-input id="username" :readonly="user!=null" v-model="join.username" placeholder="Please enter your User ID" required/>
+                  <b-form-input id="username" :readonly="user!=null && user != ''" v-model="join.username" placeholder="Please enter your User ID" required/>
                 </b-form-group>  
             </div>  
             <div class="col-6">

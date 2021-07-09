@@ -3,8 +3,13 @@
     <div class="user">
       Hi 
       <b v-if="you.name">{{you.name}} </b>
-      <b v-if="!you.name">Invited </b>
-      <a v-if="you.name" @click="disconect()" href="#">Disconect</a> or <a @click="joinAnoher()" href="#">Join another Issue</a>
+      <b v-if="!you.name">Invited  </b>
+      <template v-if="!you.name">
+        <a @click="joinAnoher()" href="#">Join to one Issue</a>
+      </template>
+      <template v-if="you.name">
+        <a v-if="you.name" @click="disconect()" href="#">Disconect</a> or <a @click="joinAnoher()" href="#">Join another Issue</a>
+      </template>
     </div>
     <div class="vote">
       <ul id="voteList">
@@ -41,7 +46,7 @@
 </template>
 
 <script>
-import {getIssue,joinIssue,voteIssue,getAuth,setAuth} from './../service/DataProvider'
+import {getIssue,joinIssue,voteIssue,getAuth,setAuth,messageError} from './../service/DataProvider'
 import JoinForm from './../components/JoinForm.vue';
 
 export default {
@@ -81,7 +86,11 @@ export default {
   },
   methods: {
     async emitVote(vote) {
-      
+      if(this.you.name == '')
+      {
+        messageError('You must be joined to issue to vote')
+        return
+      }
       const resp = await voteIssue(this.issue.code,vote)
       if(resp) 
       {
@@ -93,6 +102,8 @@ export default {
       if(resp) 
       {
         this.issue = resp
+      }else{
+        this.$router.push(`/`)
       }
     },
     async disconect() {
@@ -103,8 +114,8 @@ export default {
       this.$bvModal.show('modalJoinAnotherIssue')
     },
     async joinHandler(data){
-       this.$bvModal.hide('modalJoinAnotherIssue')
-      if(this.$route.params.id != data.issue)
+      this.$bvModal.hide('modalJoinAnotherIssue')
+      if(this.$route.params.id != data.issue || this.you.name == '')
       {
         let resp = await joinIssue(data.username,data.issue)
         if(resp) //navigate to board issue
