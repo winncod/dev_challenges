@@ -11,7 +11,7 @@ use App\Service\BaseService;
 use App\Service\RedisService;
 use Respect\Validation\Validator as v;
 
-final class IssueService
+class IssueService //Can not be final, to can mock it
 {
     private const REDIS_KEY = 'issue:%s';
 
